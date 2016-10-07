@@ -1,0 +1,1 @@
+The  benefit of using SparkleFormation is writing structured files instead of using JSON, therefore writing your Stacks in Ruby. It is much easier to write and handle large stacks, and to collaborate as a team, than maintaining one huge JSON file
