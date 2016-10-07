@@ -44,7 +44,7 @@
              "AccessKey"	:	{
 	    	"Description"	:	"SSH sceret key",
 	    	"Type"		:	"String",
-	    	"Default"	:	"plivo-test",
+	    	"Default"	:	"myvpc-test",
 	    	"MinLength"	: "5",
 	      	"MaxLength"	: "255"
 	    },
@@ -65,13 +65,13 @@
          "Properties" : {
             "CidrBlock" :  {"Ref" : "VpcCIDRIpBlock"},
             "InstanceTenancy" : "default",
-            "Tags" : [ {"Key" : "plivo", "Value" : "plivo"} ]
+            "Tags" : [ {"Key" : "myvpc", "Value" : "myvpc"} ]
          }
       },
      "InternetGateway" : {
       		"Type" : "AWS::EC2::InternetGateway",
       		"Properties" : { 
-                    "Tags" : [ {"Key" : "plivo", "Value" : "plivo"} ]
+                    "Tags" : [ {"Key" : "myvpc", "Value" : "myvpc"} ]
       		}
    		},
        "AttachGateway" : {
@@ -100,7 +100,7 @@
         		"VpcId" : { "Ref" : "VPC" },
         		"CidrBlock" : { "Fn::Select" : [ "0", {"Ref": "SubnetPublicIpBlocks"} ] },
         		"AvailabilityZone" : { "Fn::Select" : [ "0", { "Fn::GetAZs" : "" } ] },
-                         "Tags" : [ {"Key" : "plivo", "Value" : "plivo"} ]
+                         "Tags" : [ {"Key" : "myvpc", "Value" : "myvpc"} ]
       			}
    		},
           "PrivateSubnet" : {
@@ -109,21 +109,21 @@
         		"VpcId" : { "Ref" : "VPC" },
         		"CidrBlock" : { "Fn::Select" : [ "0", {"Ref": "SubnetPrivateIpBlocks"} ] },
         		"AvailabilityZone" : { "Fn::Select" : [ "0", { "Fn::GetAZs" : "" } ] },
-                         "Tags" : [ {"Key" : "plivo", "Value" : "plivo"} ]
+                         "Tags" : [ {"Key" : "myvpc", "Value" : "myvpc"} ]
 			}
 		},
              "PublicRouteTable" : {
       		"Type" : "AWS::EC2::RouteTable",
       		"Properties" : {
         		"VpcId" : {"Ref" : "VPC"},
-                         "Tags" : [ {"Key" : "name", "Value" : "pub_plivo"} ]
+                         "Tags" : [ {"Key" : "name", "Value" : "pub_myvpc"} ]
       		}
 		},
                "PrivateRouteTable" : {
       		"Type" : "AWS::EC2::RouteTable",
       		"Properties" : {
         		"VpcId" : {"Ref" : "VPC"},
-                        "Tags" : [ {"Key" : "name", "Value" : "private_plivo"} ]
+                        "Tags" : [ {"Key" : "name", "Value" : "private_myvpc"} ]
       		}
         	},
     	"PublicRoute" : {
@@ -157,10 +157,10 @@
       		}
          	},
 
-           "PlivoSG" : {
+           "mytestSG" : {
       		"Type" : "AWS::EC2::SecurityGroup",
       		"Properties" : {
-        		"GroupDescription" : "plivo Security Group",
+        		"GroupDescription" : "myvpc Security Group",
         		"VpcId" : {"Ref" : "VPC"},
         		"SecurityGroupIngress" : [
         			{ "IpProtocol" : "tcp", "FromPort" : "1", "ToPort" : "65535", "CidrIp" : { "Ref" : "VpcCIDRIpBlock" } },
@@ -178,7 +178,7 @@
             "KeyName" : { "Ref" : "AccessKey" },
             "SourceDestCheck" : "false",
             "DisableApiTermination" : "true",
-            "SecurityGroupIds" :  [{ "Ref" : "PlivoSG" } ],
+            "SecurityGroupIds" :  [{ "Ref" : "mytestSG" } ],
             "BlockDeviceMappings" : [
                 {
                   "DeviceName" : "/dev/sda1",
@@ -209,7 +209,7 @@
                         "KeyName" : { "Ref" : "AccessKey" },
                         "SourceDestCheck" : "false",
                         "DisableApiTermination" : "true",
-                        "SecurityGroupIds" : [{ "Ref" : "PlivoSG" }],
+                        "SecurityGroupIds" : [{ "Ref" : "mytestSG" }],
                         "BlockDeviceMappings" : [
                                 {
                                 "DeviceName" : "/dev/sda1",

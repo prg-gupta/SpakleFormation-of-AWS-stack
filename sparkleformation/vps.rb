@@ -29,7 +29,7 @@ end
 
 parameters(:AccessKey) do
   type 'String'
-  Default 'plivo-test'
+  Default 'mytest-test'
 end
 
 parameters(:RootDeviceSize) do
@@ -139,10 +139,10 @@ resources do
     end
   end
 
-  PlivoTestSG do
+  MyTestSG do
     type 'AWS::EC2::SecurityGroup'
     properties do 
-      GroupDescription 'PlivoTESTSG'
+      GroupDescription 'MyTESTSG'
       vpc_id ref!(:VPC)
     end
   end
@@ -150,7 +150,7 @@ resources do
  SG_ingress do
    type 'AWS::EC2::SecurityGroupIngress'
    properties do
-        group_id ref!(:PlivoTestSG)
+        group_id ref!(:MyTestSG)
         ip_protocol 'tcp'
         from_port 22
         to_port 22
@@ -161,7 +161,7 @@ resources do
    SG_ingress do
    type 'AWS::EC2::SecurityGroupIngress'
    properties do
-        group_id ref!(:PlivoTestSG)
+        group_id ref!(:MyTestSG)
         ip_protocol '-1'
         from_port 1
         to_port 65535
@@ -176,7 +176,7 @@ resources do
     ImageId ref!(:ImageID)
     SubnetId ref!(:PUBSUBNET)
     KeyName ref!(:AccessKey)
-    SecurityGroupIds [ref!(:PlivoTestSG)]
+    SecurityGroupIds [ref!(:MyTestSG)]
   end
  end
 
